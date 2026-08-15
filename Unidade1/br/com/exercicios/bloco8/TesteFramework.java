@@ -31,9 +31,9 @@ class ExecutorDeTestes {
     public static void executarTestes(Object obj) {
         Class<?> clazz = obj.getClass();
         Method[] metodos = clazz.getDeclaredMethods();
-        
+
         int testesRodados = 0;
-        
+
         for (Method method : metodos) {
             if (method.isAnnotationPresent(Teste.class)) {
                 try {

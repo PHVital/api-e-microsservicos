@@ -13,12 +13,12 @@ public class ListaTarefas {
         while (opcao != 4) {
             System.out.println("\n1. Adicionar Tarefa\n2. Remover Tarefa\n3. Listar Tarefas\n4. Sair");
             System.out.print("Escolha uma opção: ");
-            
+
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 continue;
             }
-            
+
             opcao = scanner.nextInt();
             scanner.nextLine();
 

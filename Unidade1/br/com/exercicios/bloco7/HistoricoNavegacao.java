@@ -35,15 +35,15 @@ public class HistoricoNavegacao {
 
     public static void main(String[] args) {
         HistoricoNavegacao nav = new HistoricoNavegacao();
-        
+
         nav.visitar("google.com");
         nav.visitar("github.com");
         nav.visitar("stackoverflow.com");
-        
+
         nav.voltar();
         nav.voltar();
         nav.avancar();
-        
+
         nav.visitar("youtube.com");
         nav.avancar();
         nav.voltar();

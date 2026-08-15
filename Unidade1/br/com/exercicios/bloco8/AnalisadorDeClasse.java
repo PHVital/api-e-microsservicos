@@ -22,14 +22,14 @@ class Produto {
 public class AnalisadorDeClasse {
     public static void inspecionar(Object obj) {
         Class<?> clazz = obj.getClass();
-        
+
         System.out.println("Nome da Classe: " + clazz.getName());
-        
+
         System.out.println("\nAtributos:");
         for (Field f : clazz.getDeclaredFields()) {
             System.out.println("- " + f.getName() + " (Tipo: " + f.getType().getSimpleName() + ")");
         }
-        
+
         System.out.println("\nMétodos:");
         for (Method m : clazz.getDeclaredMethods()) {
             System.out.println("- " + m.getName() + " (Retorno: " + m.getReturnType().getSimpleName() + ")");

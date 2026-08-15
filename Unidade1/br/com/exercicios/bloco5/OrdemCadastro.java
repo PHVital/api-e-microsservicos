@@ -6,7 +6,7 @@ import java.util.Map;
 public class OrdemCadastro {
     public static void main(String[] args) {
         LinkedHashMap<Integer, String> produtos = new LinkedHashMap<>();
-        
+
         produtos.put(105, "Mesa");
         produtos.put(101, "Cadeira");
         produtos.put(103, "Luminária");

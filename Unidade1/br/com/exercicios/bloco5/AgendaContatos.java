@@ -14,12 +14,12 @@ public class AgendaContatos {
         while (opcao != 4) {
             System.out.println("\n1. Adicionar Contato\n2. Buscar Contato\n3. Listar Todos\n4. Sair");
             System.out.print("Escolha: ");
-            
+
             if (!scanner.hasNextInt()) {
                 scanner.nextLine();
                 continue;
             }
-            
+
             opcao = scanner.nextInt();
             scanner.nextLine();
 

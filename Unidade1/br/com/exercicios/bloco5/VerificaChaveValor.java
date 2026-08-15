@@ -13,7 +13,7 @@ public class VerificaChaveValor {
 
         System.out.println("Verificando nome '" + nomeProcurado + "': " + agenda.containsKey(nomeProcurado));
         System.out.println("Verificando telefone '" + telefoneProcurado + "': " + agenda.containsValue(telefoneProcurado));
-        
+
         System.out.println("Verificando telefone '3333-4444': " + agenda.containsValue("3333-4444"));
     }
 }

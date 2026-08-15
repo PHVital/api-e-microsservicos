@@ -13,9 +13,9 @@ public class PilhaLivros {
         pilha.push("1984");
 
         System.out.println("Livro removido (pop): " + pilha.pop());
-        
+
         System.out.println("Livro no topo da pilha (peek): " + pilha.peek());
-        
+
         System.out.println("Estado atual da pilha: " + pilha);
     }
 }

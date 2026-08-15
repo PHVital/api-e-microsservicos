@@ -25,7 +25,7 @@ public class Circulo {
     public static void main(String[] args) {
         Circulo c = new Circulo(5.0);
         System.out.printf("Área do círculo de raio %.1f: %.2f\n", c.getRaio(), c.calcularArea());
-        
+
         System.out.println("Testando exceção para raio inválido:");
         try {
             c.setRaio(-2.0);

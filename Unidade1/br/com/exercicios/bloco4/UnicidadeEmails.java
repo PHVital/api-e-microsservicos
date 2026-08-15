@@ -9,7 +9,7 @@ public class UnicidadeEmails {
         emails.add("joao@teste.com");
         emails.add("maria@teste.com");
         emails.add("carlos@teste.com");
-        
+
         System.out.println("Adicionando e-mail repetido (joao@teste.com)...");
         boolean adicionou = emails.add("joao@teste.com");
 

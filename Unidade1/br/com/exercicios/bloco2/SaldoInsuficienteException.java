@@ -25,7 +25,7 @@ class ContaBancaria {
 class TesteExcecao {
     public static void main(String[] args) {
         ContaBancaria conta = new ContaBancaria(100.0);
-        
+
         try {
             conta.sacar(50.0);
             conta.sacar(200.0);
