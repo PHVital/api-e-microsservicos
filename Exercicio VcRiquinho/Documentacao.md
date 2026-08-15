@@ -19,6 +19,7 @@ classDiagram
         +depositar(valor: double): void
         +sacar(valor: double): void
         +getSaldo(): double
+        #validarPeriodoSimulacao(dias: int): void
     }
     Conta <|.. ContaBancaria
 
@@ -64,6 +65,7 @@ classDiagram
         #nome: String
         #email: String
         #contas: List~Conta~
+        +Cliente(nome: String, email: String, contaInicial: Conta)
         +adicionarConta(c: Conta)
         +getTaxaInvestimentoAutomatico(): double
     }
@@ -78,7 +80,7 @@ classDiagram
     Cliente <|-- PessoaFisica
     Cliente <|-- PessoaJuridica
 
-    Cliente "1" --> "*" Conta : possui
+    Cliente "1" --> "1..*" Conta : possui
     ContaInvestimento "*" --> "*" ProdutoInvestimento : aloca
 ```
 
@@ -86,22 +88,17 @@ classDiagram
 
 A solução foi estruturada aplicando fortemente os conceitos de Programação Orientada a Objetos (POO):
 
-### Encapsulamento
-Todos os atributos das classes foram definidos como `private` ou `protected` (para quando são utilizados por subclasses). O acesso e a modificação desses dados ocorrem unicamente por meio de métodos públicos (`getters`, `setters`, `depositar`, `sacar`), garantindo a segurança dos estados dos objetos. O saldo de uma conta, por exemplo, não pode ser alterado livremente, apenas mediante a chamada formal a saques e depósitos.
+### Encapsulamento e Restrições de Domínio
+- **Garantia de Conta Inicial Obrigatória**: Atendendo à regra de negócio descrita no enunciado, o construtor da classe genérica `Cliente` e de suas subclasses (`PessoaFisica` e `PessoaJuridica`) obrigatoriamente exige uma `Conta` válida. Caso seja fornecido `null`, o sistema interrompe o fluxo lançando um `IllegalArgumentException`. Isso blinda a aplicação no nível de domínio para que não existam clientes sem contas alocados na memória.
+- **Validação de Períodos Permitidos**: A classe `ContaBancaria` agora expõe o método `validarPeriodoSimulacao(int dias)` que é ativamente acionado pelas contas filhas antes de realizar qualquer cálculo nas simulações. Ele garante de maneira limpa e unificada que apenas os períodos estritos de 30, 60, 90 ou 180 dias sejam computados.
+- Os atributos das classes permanecem com modificadores `private` ou `protected`, forçando manipulação através de comportamentos (métodos) e não acesso direto ao estado.
 
-### Classes Abstratas e Interfaces
-- **Interface `Conta` e Classe Abstrata `ContaBancaria`**: A interface define os "contratos" obrigatórios de qualquer conta que exista no sistema (operações bancárias básicas e a assinatura para simulação). A classe abstrata `ContaBancaria` provê a implementação padrão para manipulação do saldo, evitando código repetitivo nas contas que irão existir.
-- **Classes Abstratas `Cliente` e `ProdutoInvestimento`**: Isolam propriedades genéricas de clientes e produtos, delegando os detalhes restritos (como a exata taxa que PF ou PJ paga) para as classes filhas por meio de métodos abstratos (ex: `getTaxaInvestimentoAutomatico()`).
-
-### Herança
-Foi extensivamente aplicada para especializar comportamentos sem repetição (DRY - Don't Repeat Yourself):
-- Clientes (`PessoaFisica` e `PessoaJuridica`) herdam atributos genéricos (nome, e-mail) de `Cliente`, além de providenciarem suas próprias taxas.
-- Contas (`ContaCorrente`, `ContaCDI` e `ContaInvestimento`) herdam a lógica do saldo vinda de `ContaBancaria`.
-- Produtos (`RendaFixa` e `RendaVariavel`) herdam informações descritivas comuns e impõem as lógicas específicas de cálculo do rendimento e carência.
+### Classes Abstratas, Interfaces e Herança
+- A **Interface `Conta`** dita o contrato bancário global, e a **Classe Abstrata `ContaBancaria`** efetiva as lógicas concretas (como manipular saldo e barrar períodos não autorizados), enxugando totalmente as classes filhas de lógicas repetitivas (DRY).
 
 ### Polimorfismo
-- **Cálculo das taxas de serviço**: O método `ContaInvestimento.realizarSimulacao` itera de forma agnóstica e transparente sobre a lista de `ProdutoInvestimento`. Ele simplesmente invoca `produto.calcularRendimento()` e `produto.isElegivelTaxa()`, e cada classe filha (Renda Fixa ou Variável) vai responder de forma diferente dependendo das próprias regras de negócio, descartando a necessidade de dezenas de estruturas condicionais `if/else` no motor da aplicação.
-- O aviso importante de isenção de taxa (alerta na tela sobre período de carência) ocorre dinamicamente em virtude do método polimórfico `isElegivelTaxa(dias)`, que no caso de renda variável retorna `true` sempre, mas em renda fixa efetua uma verificação na carência de dias. 
-- **Simulação nas contas do cliente**: O `Cliente` detém uma lista polimórfica `List<Conta>`. Ao interagir com elas, invoca-se `conta.realizarSimulacao()`, permitindo que o sistema execute o algorítmo pertinente ao tipo de conta que aquele cliente tem, variando de Pessoa para Pessoa de forma dinâmica.
+- O motor de simulação contido em `ContaInvestimento.realizarSimulacao` processa uma lista heterogênea baseada na abstração `ProdutoInvestimento`. Ele consulta polimorficamente o método `isElegivelTaxa()` que em Renda Fixa avalia o período de carência (bloqueando ou liberando a taxa de serviço), enquanto em Renda Variável aprova integralmente. Essa manobra enxuga blocos complexos de `if/else` e instâncias (type checking).
+- O mesmo vale na simulação bancária: a lista iterada em `Cliente` aponta para referências genéricas de `Conta`, disparando a mecânica correta para Conta Corrente, CDI ou Investimento dependendo unicamente da natureza do objeto sob a variável.
 
-Na classe principal `Main`, implementamos o protótipo inicial através de chamadas em script (Linha de Comando) que ilustram perfeitamente o CRUD do sistema e realizam as simulações, satisfazendo inteiramente as requisições de regras de negócios propostas pelos analistas da startup VcRiquinho.
+### Protótipo em Memória e CRUD
+Para atestar os requisitos solicitados de forma funcional, o arquivo principal de terminal `Main` executa de maneira estrita o **CRUD** (Create, Read, Update, Delete) em listas nativas que simulam o banco de dados. Lá é demonstrada a inclusão, formatação (Read), a alteração do estado de objetos (Update via Setters) e por fim a remoção (Delete). Na remoção de produtos, ilustra-se consistentemente que retirar um ativo da instituição também desvincula esse ativo das contas de clientes investidores.
