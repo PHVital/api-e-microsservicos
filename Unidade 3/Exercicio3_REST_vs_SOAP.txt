@@ -1,0 +1,21 @@
+EXERCÍCIO 3 - PESQUISA: REST x SOAP
+
+1. Qual a principal diferença entre REST e SOAP?
+A principal diferença está na natureza e flexibilidade de ambos. O SOAP (Simple Object Access Protocol) é um protocolo rígido de rede totalmente baseado em XML, estritamente validado por contratos bem definidos (WSDL) e envelopado. O REST (Representational State Transfer) não é um protocolo, mas sim um estilo de arquitetura leve e flexível, que utiliza os padrões, verbos e a semântica da própria web (HTTP), operando com recursos e suportando múltiplos formatos de dados, sendo o JSON o mais popular.
+
+2. Em quais cenários o SOAP costuma ser escolhido?
+É fortemente utilizado em cenários corporativos que exigem alta segurança (Message-Level Security), e sistemas que operam sobre transações extremamente complexas com múltiplas etapas onde é necessário garantir os princípios ACID de maneira transacional sólida em rede, como em integrações governamentais, telecomunicações, sistemas bancários corporativos ou meios de pagamento estruturados que demandam obrigatoriedade de contrato estrito (WSDL).
+
+3. Quais as vantagens e desvantagens de cada um?
+SOAP:
+- Vantagens: Segurança altíssima nativa e extensível (WS-Security), suporte nativo ao gerenciamento de transações pesadas, neutralidade no transporte (pode operar sobre SMTP, HTTP, TCP, etc.), garantia forte de contratos.
+- Desvantagens: É extremamente verboso e consome muita banda devido ao peso do envelopamento XML, a implementação costuma ser rígida, custosa e com curva de aprendizado maior.
+REST:
+- Vantagens: Muito leve e rápido, de fácil aprendizado (aproveita os conceitos de HTTP que a web já usa), legibilidade excelente para humanos (especialmente em JSON) e suporta alta escalabilidade e flexibilidade na evolução da API.
+- Desvantagens: Não possui padrões de segurança engessados na própria mensagem, e o controle de transações completas e de contratos (apesar de haver o OpenAPI) costuma ser implementado de maneira menos centralizada/nativa do que no ecossistema WS-* do SOAP.
+
+4. O que é o WS-Security?
+O Web Services Security (WS-Security) é uma extensão e padrão poderoso aplicado ao ecossistema SOAP que incorpora mecanismos refinados de segurança de ponta-a-ponta nas próprias mensagens XML. Ao contrário de depender unicamente de segurança no transporte (como um HTTPS no REST), o WS-Security embute assinaturas digitais, encriptação na mensagem e validação de tokens na estrutura do SOAP, provendo um nível de segurança na camada de Mensagem (Message-Level Security), operando de maneira confiável independente por qual rede o dado trafega.
+
+5. Em qual nível do modelo de maturidade de Richardson o SOAP é normalmente classificado?
+O SOAP se enquadra tipicamente no Nível 0 (The Swamp of POX - Plain Old XML). Nele, as aplicações em SOAP utilizam um único endpoint HTTP da web para todas as operações, sem fazer uso dos Verbos HTTP corretos (como GET, PUT e DELETE) e sem expor os Recursos por URIs exclusivas. No SOAP (Nível 0), as intenções e os parâmetros das ações encontram-se encapsulados de forma verbosa dentro do corpo (body) da mensagem em vez de modelados com os padrões da arquitetura da web.

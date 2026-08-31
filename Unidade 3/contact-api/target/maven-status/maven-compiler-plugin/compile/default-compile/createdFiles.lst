@@ -1,0 +1,4 @@
+com\example\contactapi\ContactApiApplication.class
+com\example\contactapi\controller\ContactController.class
+com\example\contactapi\model\Contact.class
+com\example\contactapi\repository\ContactRepository.class
