@@ -1,4 +1,14 @@
-com\example\contactapi\ContactApiApplication.class
+com\example\contactapi\config\OpenApiConfig.class
+com\example\contactapi\model\Address.class
+com\example\contactapi\exception\ResourceNotFoundException.class
+com\example\contactapi\dto\AddressResponseDTO.class
 com\example\contactapi\controller\ContactController.class
+com\example\contactapi\dto\ContactRequestDTO.class
+com\example\contactapi\repository\AddressRepository.class
+com\example\contactapi\exception\GlobalExceptionHandler.class
+com\example\contactapi\ContactApiApplication.class
+com\example\contactapi\dto\ContactResponseDTO.class
+com\example\contactapi\dto\AddressRequestDTO.class
 com\example\contactapi\model\Contact.class
 com\example\contactapi\repository\ContactRepository.class
+com\example\contactapi\controller\AddressController.class

@@ -1,68 +1,61 @@
 package com.example.contactapi.controller;
 
+import com.example.contactapi.dto.ContactRequestDTO;
+import com.example.contactapi.dto.ContactResponseDTO;
 import com.example.contactapi.model.Contact;
 import com.example.contactapi.repository.ContactRepository;
+import com.example.contactapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contacts")
+@Tag(name = "Contatos", description = "Gerenciamento de Contatos na Agenda")
 public class ContactController {
 
     @Autowired
     private ContactRepository contactRepository;
 
+    @Operation(summary = "Lista todos os contatos com paginação", description = "Retorna uma página de contatos. Use ?page=0&size=10 para paginar.")
     @GetMapping
-    public List<Contact> getAllContacts() {
-        return contactRepository.findAll();
+    public Page<ContactResponseDTO> getAllContacts(Pageable pageable) {
+        return contactRepository.findAll(pageable).map(ContactResponseDTO::new);
     }
 
-    @PostMapping
-    public Contact createContact(@RequestBody Contact contact) {
-        return contactRepository.save(contact);
-    }
-
-    // EXERCÍCIO 1 - Busca por nome
+    @Operation(summary = "Busca contatos por nome usando query customizada e paginação")
     @GetMapping("/search")
-    public List<Contact> searchContactsByName(@RequestParam String name) {
-        return contactRepository.findByNameContainingIgnoreCase(name);
+    public Page<ContactResponseDTO> searchContactsByName(@RequestParam String name, Pageable pageable) {
+        return contactRepository.findByNameContainingIgnoreCase(name, pageable).map(ContactResponseDTO::new);
     }
 
-    // EXERCÍCIO 2 - Método PATCH
+    @Operation(summary = "Cria um novo contato trafegando DTO")
+    @PostMapping
+    public ContactResponseDTO createContact(@Valid @RequestBody ContactRequestDTO dto) {
+        Contact contact = new Contact();
+        contact.setName(dto.getName());
+        contact.setEmail(dto.getEmail());
+        contact.setPhone(dto.getPhone());
+        return new ContactResponseDTO(contactRepository.save(contact));
+    }
+
+    @Operation(summary = "Atualiza parcialmente um contato pelo ID usando PATCH")
     @PatchMapping("/{id}")
-    public ResponseEntity<Contact> partialUpdateContact(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-
-        // --- PONTO DE ATENÇÃO: COMO FOI RESOLVIDO O RETORNO 404 SEM EXCEPTION HANDLER ---
-        // Se usássemos 'contactRepository.findById(id).orElseThrow()', receberíamos uma RuntimeException
-        // que, por não ser tratada no Spring ainda, devolveria o HTTP 500 (Internal Server Error).
-        // A solução aqui adotada foi usar um Optional direto: verificamos se está empty e, caso positivo,
-        // geramos um retorno manual 'ResponseEntity.notFound().build()' que preenche e força o Status 404 explícito.
-        // Poderia ser feito também um Global Handler para lidar de forma personalizada com os erros.
-
-        Optional<Contact> optionalContact = contactRepository.findById(id);
+    public ResponseEntity<ContactResponseDTO> partialUpdateContact(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Contact contact = contactRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Contato não encontrado com id " + id));
         
-        if (optionalContact.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        Contact contact = optionalContact.get();
-
-        if (updates.containsKey("name")) {
-            contact.setName((String) updates.get("name"));
-        }
-        if (updates.containsKey("email")) {
-            contact.setEmail((String) updates.get("email"));
-        }
-        if (updates.containsKey("phone")) {
-            contact.setPhone((String) updates.get("phone"));
-        }
+        if (updates.containsKey("name")) contact.setName((String) updates.get("name"));
+        if (updates.containsKey("email")) contact.setEmail((String) updates.get("email"));
+        if (updates.containsKey("phone")) contact.setPhone((String) updates.get("phone"));
         
         Contact updatedContact = contactRepository.save(contact);
-        return ResponseEntity.ok(updatedContact);
+        return ResponseEntity.ok(new ContactResponseDTO(updatedContact));
     }
 }
