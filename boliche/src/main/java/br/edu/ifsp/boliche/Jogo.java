@@ -65,6 +65,12 @@ public class Jogo {
                 indice += 2;
             }
         }
+        if (indice >= this.jogadaAtual) {
+            return false;
+        }
+        if (ehStrike(indice)) {
+            return this.jogadaAtual >= indice + 3;
+        }
         if (this.jogadaAtual >= indice + 2 && ehSpare(indice)) {
             return this.jogadaAtual >= indice + 3;
         }
