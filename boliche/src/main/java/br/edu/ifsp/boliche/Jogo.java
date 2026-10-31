@@ -15,7 +15,10 @@ public class Jogo {
         int soma = 0;
         int indice = 0;
         for (int frame = 0; frame < 10; frame++) {
-            if (ehSpare(indice)) {
+            if (this.jogadas[indice] == 10) {
+                soma += 10 + this.jogadas[indice + 1] + this.jogadas[indice + 2];
+                indice += 1;
+            } else if (ehSpare(indice)) {
                 soma += 10 + bonusDeSpare(indice);
                 indice += 2;
             } else {
