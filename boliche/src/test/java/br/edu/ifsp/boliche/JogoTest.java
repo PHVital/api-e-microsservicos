@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JogoTest {
@@ -93,5 +94,15 @@ public class JogoTest {
         }
         assertEquals(167, jogo.pontuacao());
         assertTrue(jogo.encerrado());
+    }
+
+    @Test
+    void jogadaComMenosDeZeroPinosLancaExcecao() {
+        assertThrows(IllegalArgumentException.class, () -> jogo.jogar(-1));
+    }
+
+    @Test
+    void jogadaComMaisDeDezPinosLancaExcecao() {
+        assertThrows(IllegalArgumentException.class, () -> jogo.jogar(11));
     }
 }
