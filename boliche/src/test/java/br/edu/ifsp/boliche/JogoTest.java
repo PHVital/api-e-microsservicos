@@ -118,4 +118,22 @@ public class JogoTest {
         jogo.jogar(6);
         assertThrows(IllegalArgumentException.class, () -> jogo.jogar(5));
     }
+
+    @Test
+    void jogadaAposFimDePartidaNormalLancaExcecao() {
+        jogarMuitas(20, 0);
+        assertThrows(IllegalStateException.class, () -> jogo.jogar(0));
+    }
+
+    @Test
+    void jogadaAposJogadaExtraDeSpareNoDecimoFrameLancaExcecao() {
+        jogarMuitas(21, 5);
+        assertThrows(IllegalStateException.class, () -> jogo.jogar(5));
+    }
+
+    @Test
+    void jogadaAposJogadasExtrasDeStrikeNoDecimoFrameLancaExcecao() {
+        jogarMuitas(12, 10);
+        assertThrows(IllegalStateException.class, () -> jogo.jogar(10));
+    }
 }
