@@ -10,7 +10,28 @@ public class Jogo {
         if (pinos < 0 || pinos > 10) {
             throw new IllegalArgumentException("A quantidade de pinos deve estar entre 0 e 10.");
         }
+        if (excedeDezPinosNoFrame(pinos)) {
+            throw new IllegalArgumentException("A soma dos pinos de um frame não pode ultrapassar 10.");
+        }
         this.jogadas[this.jogadaAtual++] = pinos;
+    }
+
+    private boolean excedeDezPinosNoFrame(int pinos) {
+        int indice = 0;
+        for (int frame = 0; frame < 9; frame++) {
+            if (indice == this.jogadaAtual) {
+                return false;
+            }
+            if (ehStrike(indice)) {
+                indice += 1;
+            } else {
+                if (indice + 1 == this.jogadaAtual) {
+                    return this.jogadas[indice] + pinos > 10;
+                }
+                indice += 2;
+            }
+        }
+        return false;
     }
 
     /** Pontuação acumulada; avaliada ao final da partida. */
