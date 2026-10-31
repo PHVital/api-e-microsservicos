@@ -51,6 +51,20 @@ public class Jogo {
 
     /** Indica se a partida já terminou. */
     public boolean encerrado() {
-        return false;
+        int indice = 0;
+        for (int frame = 0; frame < 9; frame++) {
+            if (indice >= this.jogadaAtual) {
+                return false;
+            }
+            if (ehStrike(indice)) {
+                indice += 1;
+            } else {
+                if (indice + 1 >= this.jogadaAtual) {
+                    return false;
+                }
+                indice += 2;
+            }
+        }
+        return this.jogadaAtual >= indice + 2;
     }
 }
