@@ -7,6 +7,9 @@ public class Jogo {
 
     /** Registra uma jogada com a quantidade de pinos derrubados. */
     public void jogar(int pinos) {
+        if (encerrado()) {
+            throw new IllegalStateException("A partida já foi encerrada.");
+        }
         if (pinos < 0 || pinos > 10) {
             throw new IllegalArgumentException("A quantidade de pinos deve estar entre 0 e 10.");
         }
