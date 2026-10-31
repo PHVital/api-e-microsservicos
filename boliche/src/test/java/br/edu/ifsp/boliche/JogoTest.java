@@ -19,6 +19,11 @@ public class JogoTest {
         }
     }
 
+    private void jogarSpare() {
+        jogo.jogar(5);
+        jogo.jogar(5);
+    }
+
     @Test
     void nenhumPinoDerrubadoValeZero() {
         jogarMuitas(20, 0);
@@ -33,8 +38,7 @@ public class JogoTest {
 
     @Test
     void umSpareValeDezMaisProximaJogada() {
-        jogo.jogar(5);
-        jogo.jogar(5);
+        jogarSpare();
         jogo.jogar(3);
         jogarMuitas(17, 0);
         assertEquals(16, jogo.pontuacao());

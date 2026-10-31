@@ -15,15 +15,27 @@ public class Jogo {
         int soma = 0;
         int indice = 0;
         for (int frame = 0; frame < 10; frame++) {
-            if (this.jogadas[indice] + this.jogadas[indice + 1] == 10) {
-                soma += 10 + this.jogadas[indice + 2];
+            if (ehSpare(indice)) {
+                soma += 10 + bonusDeSpare(indice);
                 indice += 2;
             } else {
-                soma += this.jogadas[indice] + this.jogadas[indice + 1];
+                soma += pinosDoFrame(indice);
                 indice += 2;
             }
         }
         return soma;
+    }
+
+    private boolean ehSpare(int indice) {
+        return this.jogadas[indice] + this.jogadas[indice + 1] == 10;
+    }
+
+    private int bonusDeSpare(int indice) {
+        return this.jogadas[indice + 2];
+    }
+
+    private int pinosDoFrame(int indice) {
+        return this.jogadas[indice] + this.jogadas[indice + 1];
     }
 
     /** Indica se a partida já terminou. */
