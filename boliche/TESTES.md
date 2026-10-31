@@ -15,8 +15,8 @@ Esta lista descreve a sequência planejada de testes para guiar o desenvolviment
 - [x] **Partida mista completa:** `10` · `7, 3` · `9, 0` · `10` · `0, 8` · `8, 2` · `0, 6` · `10` · `10` · `10, 8, 1` -> pontuação `167`, jogo encerrado ao final.
 
 ## 3. Regras de Validação (V1 a V3)
-- [ ] **V1 (Pinos negativos):** Jogada com menos de 0 pinos (ex.: `-1`) lança `IllegalArgumentException`.
-- [ ] **V1 (Mais de 10 pinos):** Jogada com mais de 10 pinos (ex.: `11`) lança `IllegalArgumentException`.
+- [x] **V1 (Pinos negativos):** Jogada com menos de 0 pinos (ex.: `-1`) lança `IllegalArgumentException`.
+- [x] **V1 (Mais de 10 pinos):** Jogada com mais de 10 pinos (ex.: `11`) lança `IllegalArgumentException`.
 - [ ] **V2 (Soma do frame > 10 nos frames 1 a 9):** Segunda jogada de um frame normal que faça a soma ultrapassar 10 pinos (ex.: `7` e depois `4`) lança `IllegalArgumentException`.
 - [ ] **V3 (Jogada após o fim da partida):**
   - [ ] Após 20 jogadas sem strike ou spare no 10º frame, tentar jogar novamente lança `IllegalStateException`.
