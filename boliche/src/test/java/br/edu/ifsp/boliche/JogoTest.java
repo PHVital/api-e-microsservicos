@@ -74,4 +74,13 @@ public class JogoTest {
         assertEquals(150, jogo.pontuacao());
         assertTrue(jogo.encerrado());
     }
+
+    @Test
+    void jogoPerfeitoValeTrezentos() {
+        jogarMuitas(11, 10);
+        assertFalse(jogo.encerrado());
+        jogo.jogar(10);
+        assertEquals(300, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
+    }
 }
