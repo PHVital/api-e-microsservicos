@@ -24,6 +24,10 @@ public class JogoTest {
         jogo.jogar(5);
     }
 
+    private void jogarStrike() {
+        jogo.jogar(10);
+    }
+
     @Test
     void nenhumPinoDerrubadoValeZero() {
         jogarMuitas(20, 0);
@@ -46,7 +50,7 @@ public class JogoTest {
 
     @Test
     void umStrikeValeDezMaisDuasProximasJogadas() {
-        jogo.jogar(10);
+        jogarStrike();
         jogo.jogar(3);
         jogo.jogar(4);
         jogarMuitas(16, 0);

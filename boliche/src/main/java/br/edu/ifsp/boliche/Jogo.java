@@ -15,8 +15,8 @@ public class Jogo {
         int soma = 0;
         int indice = 0;
         for (int frame = 0; frame < 10; frame++) {
-            if (this.jogadas[indice] == 10) {
-                soma += 10 + this.jogadas[indice + 1] + this.jogadas[indice + 2];
+            if (ehStrike(indice)) {
+                soma += 10 + bonusDeStrike(indice);
                 indice += 1;
             } else if (ehSpare(indice)) {
                 soma += 10 + bonusDeSpare(indice);
@@ -27,6 +27,14 @@ public class Jogo {
             }
         }
         return soma;
+    }
+
+    private boolean ehStrike(int indice) {
+        return this.jogadas[indice] == 10;
+    }
+
+    private int bonusDeStrike(int indice) {
+        return this.jogadas[indice + 1] + this.jogadas[indice + 2];
     }
 
     private boolean ehSpare(int indice) {

@@ -9,7 +9,7 @@ Esta lista descreve a sequência planejada de testes para guiar o desenvolviment
 
 ## 2. Bônus de Spare e Strike
 - [x] **Um spare:** jogadas `5, 5, 3` seguidas de 17 jogadas de `0` -> pontuação `16`.
-- [ ] **Um strike:** jogada `10`, seguida de `3, 4` e 16 jogadas de `0` -> pontuação `24` (total de 19 jogadas na partida).
+- [x] **Um strike:** jogada `10`, seguida de `3, 4` e 16 jogadas de `0` -> pontuação `24` (total de 19 jogadas na partida).
 - [ ] **Spare em todos os frames:** 21 jogadas de `5` (inclui 1 jogada extra no 10º frame) -> pontuação `150`, jogo encerrado após a 21ª jogada.
 - [ ] **Jogo perfeito:** 12 jogadas de `10` (inclui 2 jogadas extras no 10º frame) -> pontuação `300`, jogo encerrado após a 12ª jogada.
 - [ ] **Partida mista completa:** `10` · `7, 3` · `9, 0` · `10` · `0, 8` · `8, 2` · `0, 6` · `10` · `10` · `10, 8, 1` -> pontuação `167`, jogo encerrado ao final.
