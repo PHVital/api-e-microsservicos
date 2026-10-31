@@ -3,6 +3,8 @@ package br.edu.ifsp.boliche;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JogoTest {
 
@@ -30,14 +32,19 @@ public class JogoTest {
 
     @Test
     void nenhumPinoDerrubadoValeZero() {
+        assertFalse(jogo.encerrado());
         jogarMuitas(20, 0);
         assertEquals(0, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
     }
 
     @Test
     void umPinoPorJogadaValeVinte() {
-        jogarMuitas(20, 1);
+        jogarMuitas(19, 1);
+        assertFalse(jogo.encerrado());
+        jogo.jogar(1);
         assertEquals(20, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
     }
 
     @Test
@@ -55,5 +62,6 @@ public class JogoTest {
         jogo.jogar(4);
         jogarMuitas(16, 0);
         assertEquals(24, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
     }
 }
