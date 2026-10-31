@@ -30,4 +30,13 @@ public class JogoTest {
         jogarMuitas(20, 1);
         assertEquals(20, jogo.pontuacao());
     }
+
+    @Test
+    void umSpareValeDezMaisProximaJogada() {
+        jogo.jogar(5);
+        jogo.jogar(5);
+        jogo.jogar(3);
+        jogarMuitas(17, 0);
+        assertEquals(16, jogo.pontuacao());
+    }
 }
