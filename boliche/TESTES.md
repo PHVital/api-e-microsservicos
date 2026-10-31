@@ -3,9 +3,9 @@
 Esta lista descreve a sequência planejada de testes para guiar o desenvolvimento orientado a testes (TDD) da classe `Jogo`, partindo do caso degenerado/mais simples até as regras completas e validações.
 
 ## 1. Casos Básicos (Frames Abertos)
-- [ ] **Nenhum pino (Gutter game):** 20 jogadas de 0 pinos -> pontuação `0`, jogo `encerrado() == true` ao final.
+- [x] **Nenhum pino (Gutter game):** 20 jogadas de 0 pinos -> pontuação `0`, jogo `encerrado() == true` ao final.
 - [ ] **Jogo recém-criado não está encerrado:** Antes de completar os frames, `encerrado()` deve retornar `false`.
-- [ ] **Um pino por jogada:** 20 jogadas de 1 pino -> pontuação `20`, jogo encerrado ao final.
+- [x] **Um pino por jogada:** 20 jogadas de 1 pino -> pontuação `20`, jogo encerrado ao final.
 
 ## 2. Bônus de Spare e Strike
 - [ ] **Um spare:** jogadas `5, 5, 3` seguidas de 17 jogadas de `0` -> pontuação `16`.
