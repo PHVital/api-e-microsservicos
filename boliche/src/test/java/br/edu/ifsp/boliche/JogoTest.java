@@ -53,6 +53,7 @@ public class JogoTest {
         jogo.jogar(3);
         jogarMuitas(17, 0);
         assertEquals(16, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
     }
 
     @Test
@@ -62,6 +63,15 @@ public class JogoTest {
         jogo.jogar(4);
         jogarMuitas(16, 0);
         assertEquals(24, jogo.pontuacao());
+        assertTrue(jogo.encerrado());
+    }
+
+    @Test
+    void spareEmTodosOsFramesValeCentoECinquenta() {
+        jogarMuitas(20, 5);
+        assertFalse(jogo.encerrado());
+        jogo.jogar(5);
+        assertEquals(150, jogo.pontuacao());
         assertTrue(jogo.encerrado());
     }
 }
